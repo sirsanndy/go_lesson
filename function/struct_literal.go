@@ -14,7 +14,7 @@ func main() {
 
 	sandy = Customer{
 		Name:    "Sandy",
-		Address: "Malang",
+		Address: "Batu",
 		Age:     29,
 	}
 

@@ -8,7 +8,7 @@ type Customer struct {
 }
 
 func (customer Customer) sayHi(name string) {
-	fmt.Println("My Name is", customer.Name)
+	fmt.Println("Hello", name, "My Name is", customer.Name)
 }
 
 func main() {
@@ -18,10 +18,10 @@ func main() {
 
 	sandy = Customer{
 		Name:    "Sandy",
-		Address: "Malang",
+		Address: "Batu",
 		Age:     29,
 	}
 
 	fmt.Println(sandy)
-	sandy.sayHi("")
+	sandy.sayHi("there")
 }
