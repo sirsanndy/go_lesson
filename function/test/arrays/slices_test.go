@@ -10,20 +10,22 @@ func TestSlices(t *testing.T) {
 		got := Sum(numbers)
 		want := 15
 
-		if got != want {
-			t.Errorf("got %d want %d given, %v", got, want, numbers)
-		}
+		assertCorrectResult(t, got, want, numbers)
 	})
 
 	t.Run("collection of any size", func(t *testing.T) {
 		numbers := []int{1, 2, 3}
 
 		got := Sum(numbers)
-		want := 6
+		want := 7
 
-		if got != want {
-			t.Errorf("got %d want %d given, %v", got, want, numbers)
-		}
+		assertCorrectResult(t, got, want, numbers)
 	})
+}
 
+func assertCorrectResult(t testing.TB, got, want int, numbers []int) {
+	t.Helper()
+	if got != want {
+		t.Errorf("got %d want %d given, %v", got, want, numbers)
+	}
 }
