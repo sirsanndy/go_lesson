@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func random() interface{} {
+func random() any {
 	return "OK"
 }
 
