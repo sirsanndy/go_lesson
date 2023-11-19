@@ -12,7 +12,7 @@ func main() {
 	var person1 *Person = &person
 
 	person1.Address = "Batu"
-	person1 = &Person{"Ilham", "Yogyakarta", 19}
+	*person1 = Person{"Ilham", "Yogyakarta", 19}
 	fmt.Println(person)
 	fmt.Println(person1)
 }
