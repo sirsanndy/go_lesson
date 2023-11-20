@@ -17,7 +17,7 @@ func TestSlices(t *testing.T) {
 		numbers := []int{1, 2, 3}
 
 		got := Sum(numbers)
-		want := 7
+		want := 6
 
 		assertCorrectResult(t, got, want, numbers)
 	})
