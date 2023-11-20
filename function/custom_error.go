@@ -40,5 +40,7 @@ func main() {
 		} else {
 			fmt.Println("unknown error:", err.Error())
 		}
+	} else {
+		fmt.Println("Success")
 	}
 }
