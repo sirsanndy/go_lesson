@@ -14,11 +14,7 @@ func registerUser(name string, filter Blacklist) {
 
 func main() {
 	blacklist := func(name string) bool {
-		if name == "stfu" {
-			return true
-		} else {
-			return false
-		}
+		return name == "stfu"
 	}
 
 	registerUser("Sandy", blacklist)
