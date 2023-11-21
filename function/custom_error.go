@@ -21,7 +21,7 @@ func (n *notFoundError) Error() string {
 	return n.Message
 }
 
-func SaveData(id string, data any) error {
+func saveData(id string, data any) error {
 	err := errors.Join(checkValidation(id), checkNotFound(id))
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func checkNotFound(id string) error {
 }
 
 func main() {
-	var err = SaveData("Say", nil)
+	var err = saveData("Say", nil)
 	var errVal *validationError
 	var errNotFound *notFoundError
 	if err != nil {
