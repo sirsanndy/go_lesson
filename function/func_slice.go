@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// ... variadic must be last arg
 func sumAll(n int, numbers ...int) int {
 	if n <= 0 {
 		return 0
