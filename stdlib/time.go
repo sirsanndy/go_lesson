@@ -12,4 +12,9 @@ func main() {
 	var utc = time.Date(2024, time.July, 8, 0, 0, 0, 0, time.UTC)
 	fmt.Println(utc)
 	fmt.Println(utc.Local())
+
+	formatter := "Mon, 2006-01-02 15:04:05"
+
+	var val = utc.Format(formatter)
+	fmt.Println(val)
 }
