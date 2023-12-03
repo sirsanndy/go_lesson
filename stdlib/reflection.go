@@ -10,9 +10,9 @@ type Sample struct {
 }
 
 type Person struct {
-	Name string
-	Age  int
-	Addr string
+	Name string `required:"true" max:"110"`
+	Age  int    `required:"true" max:"110"`
+	Addr string `required:"true" max:"255"`
 }
 
 func readField(val any) {
@@ -21,6 +21,8 @@ func readField(val any) {
 	for i := 0; i < valueType.NumField(); i++ {
 		var valueField reflect.StructField = valueType.Field(i)
 		fmt.Println(valueField.Name, "with type", valueField.Type)
+		fmt.Println("required:", valueField.Tag.Get("required"))
+		fmt.Println("max:", valueField.Tag.Get("max"))
 	}
 }
 
