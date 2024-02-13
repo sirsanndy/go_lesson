@@ -23,4 +23,5 @@ func runApl(error bool) {
 
 func main() {
 	runApl(true)
+	fmt.Println("Hello")
 }
