@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 )
 
 func createNewFile(name string, message string) error {
@@ -37,9 +38,21 @@ func readFile(name string) (string, error) {
 	return message, nil
 }
 
-func main() {
-	createNewFile("sample.log", "this is a sample log")
-	message, _ := readFile("sample.log")
+func appendFile(name string, message string) error {
+	file, err := os.OpenFile(name, os.O_RDWR|os.O_APPEND, 0666)
+	if err != nil {
+		return err
+	}
 
+	defer file.Close()
+	file.WriteString(message)
+	return nil
+}
+
+func main() {
+	var fileName string = "sample.log"
+	createNewFile(fileName, "this is a sample log")
+	appendFile(fileName, string("\n"+time.Now().Format(time.RFC3339)))
+	message, _ := readFile(fileName)
 	fmt.Println(message)
 }
