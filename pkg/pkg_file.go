@@ -28,7 +28,7 @@ func readFile(name string) (string, error) {
 	var message string
 	for {
 		line, _, err := reader.ReadLine()
-		message += string(line)
+		message += string(line) + "\n"
 		if err == io.EOF {
 			break
 		}
