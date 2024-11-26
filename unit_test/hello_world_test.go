@@ -1,9 +1,16 @@
 package unit_test
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
+
+func TestMain(m *testing.M) {
+	fmt.Println("Test Started")
+	m.Run()
+	fmt.Println("Test Finished")
+}
 
 func TestSayHello(t *testing.T) {
 	name := "Sandy"
