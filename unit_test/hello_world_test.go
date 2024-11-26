@@ -40,3 +40,20 @@ func TestSayHelloNegativeAssertions(t *testing.T) {
 	result := SayHello(name)
 	assert.NotEqual(t, result, "Hello "+"Assertions", "SayHello doesn't give expected result 'Hello "+name+"'")
 }
+
+func TestSubTest(t *testing.T) {
+	t.Run("Positive Test", func(t *testing.T) {
+		name := "Sandy"
+		result := SayHello(name)
+		assert.Equal(t, result, "Hello "+name, "SayHello doesn't give expected result 'Hello "+name+"'")
+	})
+
+	t.Run("Negative Test", func(t *testing.T) {
+		name := "Sandy"
+		result := SayHello(name)
+
+		if result == "Hello "+"Assertions" {
+			t.Fatal("SayHello doesn't give expected result 'Hello " + name + "'")
+		}
+	})
+}
