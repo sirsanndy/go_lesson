@@ -33,17 +33,17 @@ func TestChannelAsParameter(t *testing.T) {
 }
 
 func TestChannelIn(t *testing.T) {
-	channel := make(chan string)
-	defer close(channel)
-
-	go helper.OnlyIn(channel)
+	chan_in := make(chan string)
+	defer close(chan_in)
+	go helper.OnlyIn(chan_in)
+	fmt.Println(<-chan_in)
 	time.Sleep(3 * time.Second)
 }
 
 func TestChannelOut(t *testing.T) {
-	channel := make(chan string)
-	defer close(channel)
+	chan_out := make(chan string)
+	defer close(chan_out)
 
-	go helper.OnlyOut(channel)
-	time.Sleep(5 * time.Second)
+	go helper.OnlyOut(chan_out)
+	time.Sleep(3 * time.Second)
 }
