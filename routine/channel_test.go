@@ -82,3 +82,11 @@ func TestRangeChannel(t *testing.T) {
 
 	fmt.Println("End of Channel")
 }
+
+func TestSelectChannel(t *testing.T) {
+	channel1 := make(chan string)
+	channel2 := make(chan string)
+
+	go helper.SelectChannel(channel1, channel2)
+	time.Sleep(3 * time.Second)
+}
