@@ -19,7 +19,7 @@ func TestCreateChannel(t *testing.T) {
 
 	data := <-channel
 	fmt.Println(data)
-	time.Sleep(5 * time.Second)
+	time.Sleep(3 * time.Second)
 }
 
 func TestChannelAsParameter(t *testing.T) {
@@ -29,5 +29,21 @@ func TestChannelAsParameter(t *testing.T) {
 	go helper.GiveMeResponse(channel)
 	data := <-channel
 	fmt.Println(data)
+	time.Sleep(3 * time.Second)
+}
+
+func TestChannelIn(t *testing.T) {
+	channel := make(chan string)
+	defer close(channel)
+
+	go helper.OnlyIn(channel)
+	time.Sleep(3 * time.Second)
+}
+
+func TestChannelOut(t *testing.T) {
+	channel := make(chan string)
+	defer close(channel)
+
+	go helper.OnlyOut(channel)
 	time.Sleep(5 * time.Second)
 }
