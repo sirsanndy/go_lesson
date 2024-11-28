@@ -11,8 +11,10 @@ func TestRWMutexBankAccount(t *testing.T) {
 	account := bank.BankAccount{}
 	for i := 0; i < 1000; i++ {
 		go func() {
-			account.AddBalance(1)
-			fmt.Println(account.GetBalance())
+			for j := 0; j < 100; j++ {
+				account.AddBalance(1)
+				fmt.Println(account.GetBalance())
+			}
 		}()
 	}
 
