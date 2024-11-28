@@ -3,6 +3,7 @@ package routine
 import (
 	"fmt"
 	"go-routine/helper"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -46,4 +47,38 @@ func TestChannelOut(t *testing.T) {
 
 	go helper.OnlyOut(chan_out)
 	time.Sleep(3 * time.Second)
+}
+
+func TestBufferedChannel(t *testing.T) {
+	channel := make(chan string, 3)
+	defer close(channel)
+
+	go func() {
+		channel <- "Test Channel 1"
+		channel <- "Test Channel 2"
+		channel <- "Test Channel 3"
+	}()
+
+	fmt.Println(<-channel)
+	channel <- "Test Channel 4"
+	fmt.Println(<-channel)
+	channel <- "Test Channel 5"
+	time.Sleep(3 * time.Second)
+	fmt.Println("End of Channel")
+}
+
+func TestRangeChannel(t *testing.T) {
+	channel := make(chan string)
+	go func() {
+		defer close(channel)
+		for i := 0; i < 10; i++ {
+			channel <- "Channel " + strconv.Itoa(i)
+		}
+	}()
+
+	for data := range channel {
+		fmt.Println("Received data", data)
+	}
+
+	fmt.Println("End of Channel")
 }
