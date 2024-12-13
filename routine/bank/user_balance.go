@@ -1,6 +1,7 @@
 package bank
 
 import (
+	"fmt"
 	"sync"
 	"time"
 )
@@ -25,11 +26,13 @@ func (user *UserBalance) Change(amount int) {
 
 func Transfer(user1 *UserBalance, user2 *UserBalance, amount int) {
 	user1.Lock()
+	fmt.Println("User 1 Locked")
 	user1.Change(-amount)
 
 	time.Sleep(1 * time.Second)
 
 	user2.Lock()
+	fmt.Println("User 2 Locked")
 	user2.Change(amount)
 
 	time.Sleep(1 * time.Second)
