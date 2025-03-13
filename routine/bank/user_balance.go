@@ -39,3 +39,28 @@ func Transfer(user1 *UserBalance, user2 *UserBalance, amount int) {
 	user1.Unlock()
 	user2.Unlock()
 }
+
+func TransferAntiDeadlock(user1 *UserBalance, user2 *UserBalance, amount int) {
+	if user1.Name < user2.Name {
+		user1.Lock()
+		fmt.Println("User 1 Locked with balance : ", user1.Balance)
+		user2.Lock()
+		fmt.Println("User 2 Locked with balance : ", user2.Balance)
+	} else {
+		user2.Lock()
+		fmt.Println("User 2 Locked with balance : ", user2.Balance)
+		user1.Lock()
+		fmt.Println("User 1 Locked with balance : ", user1.Balance)
+	}
+
+	user1.Change(-amount)
+
+	time.Sleep(1 * time.Second)
+
+	user2.Change(amount)
+
+	time.Sleep(1 * time.Second)
+
+	user1.Unlock()
+	user2.Unlock()
+}
