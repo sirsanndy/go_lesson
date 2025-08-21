@@ -18,15 +18,15 @@ func TestDeadlock(t *testing.T) {
 		Balance: 3000000,
 	}
 
-	go bank.Transfer(&user1, &user2, 100000)
-	go bank.Transfer(&user2, &user1, 300000)
+	go bank.TransferAntiDeadlock(&user1, &user2, 100000)
+	go bank.TransferAntiDeadlock(&user2, &user1, 300000)
 
 	time.Sleep(3 * time.Second)
 	fmt.Println("User", user1.Name+", Balance", user1.Balance)
 	fmt.Println("User", user2.Name+", Balance", user2.Balance)
 
-	go bank.Transfer(&user1, &user2, 100000)
-	go bank.Transfer(&user2, &user1, 200000)
+	go bank.TransferAntiDeadlock(&user1, &user2, 100000)
+	go bank.TransferAntiDeadlock(&user2, &user1, 200000)
 
 	time.Sleep(3 * time.Second)
 	fmt.Println("Balance ", user1.Name, user1.Balance)
