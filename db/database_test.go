@@ -23,3 +23,19 @@ func TestExecSql(t *testing.T) {
 
 	fmt.Println("SQL script executed successfully")
 }
+
+func TestQuerySql(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+
+	script := "SELECT id, name FROM customer where name = 'sandy'"
+	rows, err := db.QueryContext(ctx, script)
+	if err != nil {
+		t.Errorf("Failed to execute SQL script: %v", err)
+		panic(err)
+	}
+
+	defer rows.Close()
+}
