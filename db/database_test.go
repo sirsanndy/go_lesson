@@ -30,12 +30,35 @@ func TestQuerySql(t *testing.T) {
 
 	ctx := context.Background()
 
-	script := "SELECT id, name FROM customer where name = 'sandy'"
+	script := "SELECT id, name FROM customer"
 	rows, err := db.QueryContext(ctx, script)
 	if err != nil {
 		t.Errorf("Failed to execute SQL script: %v", err)
 		panic(err)
 	}
+	results := make(chan struct {
+		id, name string
+		err      error
+	})
 
+	go func() {
+		for rows.Next() {
+			var id, name string
+			err := rows.Scan(&id, &name)
+			results <- struct {
+				id, name string
+				err      error
+			}{id, name, err}
+		}
+		close(results)
+	}()
+
+	for result := range results {
+		if result.err != nil {
+			t.Errorf("Failed to scan row: %v", result.err)
+			continue
+		}
+		fmt.Printf("ID: %s, Name: %s\n", result.id, result.name)
+	}
 	defer rows.Close()
 }
