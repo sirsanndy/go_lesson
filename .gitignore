@@ -59,3 +59,4 @@ go.work.sum
 
 # env file
 .env
+docker-compose.yml
