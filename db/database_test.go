@@ -155,3 +155,59 @@ func TestSqlSafe(t *testing.T) {
 	rows.Close()
 	fmt.Println("Query executed successfully")
 }
+
+func TestPrepareStatement(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+	name := "Sandy"
+	script := `SELECT id, name FROM customer WHERE name = $1`
+	statement, err := db.PrepareContext(ctx, script)
+	if err != nil {
+		t.Errorf("Failed to prepare SQL statement: %v", err)
+		panic(err)
+	}
+	defer statement.Close()
+
+	rows, err := statement.QueryContext(ctx, name)
+	if err != nil {
+		t.Errorf(errExecSqlQueryMsg, err)
+		panic(err)
+	}
+	for rows.Next() {
+		var id, name string
+		err := rows.Scan(&id, &name)
+		if err != nil {
+			t.Errorf(errScanRowMsg, err)
+			return
+		}
+	}
+	rows.Close()
+	fmt.Println("Query executed successfully")
+}
+
+func TestTransaction(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+	tx, err := db.BeginTx(ctx, nil)
+	if err != nil {
+		t.Errorf("Failed to begin transaction: %v", err)
+		panic(err)
+	}
+	defer tx.Rollback()
+	script := `
+		INSERT INTO customer (user_name, email, name) VALUES ('john_doe', 'john@example.com', 'John Doe');`
+
+	if _, err := tx.ExecContext(ctx, script); err != nil {
+		t.Errorf("Failed to execute SQL script: %v", err)
+		return
+	}
+
+	if err := tx.Commit(); err != nil {
+		t.Errorf("Failed to commit transaction: %v", err)
+		panic(err)
+	}
+}
